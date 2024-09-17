@@ -1,11 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const authRoutes = require('./routes/userRoutes');
+const authRoute = require('./routes/auth.route');
 const formRoutes = require('./routes/formRoutes');
-const emailRoute = require('./routes/emailRoute');
-require('dotenv').config();
+const mailRoute = require('./routes/mail.route');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,15 +20,13 @@ mongoose.connect(process.env.MONGO_URI)
     .catch(err => console.log(err));
 
 // Define routes
-app.use(authRoutes);
+app.use(authRoute);
 app.use(formRoutes);
-app.use(emailRoute);
+app.use(mailRoute);
 
 app.get('/', (req, res) => {
     res.send('Hello, world!');
 });
-
-
 
 // Start the server
 app.listen(PORT, () => {
